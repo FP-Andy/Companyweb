@@ -231,6 +231,39 @@
         <p><strong>Phone</strong> 010-6343-1823</p>
         <p><strong>Website</strong> fineplay.kr</p>
       </div>
+      <form
+        class="contact-form"
+        action="https://formspree.io/f/xrealedg"
+        method="POST"
+      >
+        <label>
+          <span>회사명</span>
+          <input type="text" name="company" placeholder="회사 또는 팀 이름" required />
+        </label>
+        <label>
+          <span>담당자</span>
+          <input type="text" name="name" placeholder="성함" required />
+        </label>
+        <label>
+          <span>연락처</span>
+          <input type="text" name="phone" placeholder="010-0000-0000" />
+        </label>
+        <label>
+          <span>이메일</span>
+          <input type="email" name="email" placeholder="name@company.com" required />
+        </label>
+        <label class="full">
+          <span>문의 내용</span>
+          <textarea
+            name="message"
+            rows="5"
+            placeholder="제휴 목적과 필요한 내용을 간단히 남겨주세요."
+            required
+          ></textarea>
+        </label>
+        <input type="hidden" name="_subject" value="Fine Play 제휴 문의" />
+        <button class="btn" type="submit">제휴 문의 보내기</button>
+      </form>
     </footer>
 
     <script src="./assets/scripts/main.js"></script>
