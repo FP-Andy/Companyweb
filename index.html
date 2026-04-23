@@ -3,267 +3,190 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fine Play | AI 기반 생활축구 분석 솔루션</title>
+    <title>Fine Ludens | Product</title>
     <meta
       name="description"
-      content="스마트폰 영상 하나로 경기를 분석하고 성장을 기록하는 Fine Play IR 페이지"
+      content="Fine Ludens는 Vision AI로 생활스포츠 경기를 분석해 더 재미있고 의미 있는 경험을 만드는 스포츠테크 기업입니다."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./assets/styles/main.css" />
   </head>
-  <body>
+  <body class="product-page">
     <div class="bg-glow bg-glow-1"></div>
     <div class="bg-glow bg-glow-2"></div>
 
-    <header class="hero section reveal">
-      <nav class="topbar">
-        <div class="brand" aria-label="Fine Play">
-          <img class="brand-logo" src="./assets/images/fineplay-logo.png" alt="Fine Play" />
-          <span class="brand-fallback">FINE PLAY</span>
-        </div>
-        <a class="btn btn-sm" href="#contact">Contact</a>
-      </nav>
-      <p class="kicker">AI Sports Intelligence</p>
-      <h1>스마트폰 영상으로,<br />경기를 분석하고<br />성장을 기록합니다.</h1>
-      <p class="subtitle">
-        소비되던 축구 경기를 축적 가능한 자산으로 전환하는 경기 데이터 인프라
-      </p>
-      <div class="hero-cta">
-        <a class="btn" href="#solution">솔루션 보기</a>
-        <a class="btn ghost" href="#traction">실증 결과 확인</a>
+    <header class="site-header reveal">
+      <div class="site-nav section">
+        <a class="brand" aria-label="Fine Ludens" href="./index.html">
+          <img class="brand-logo" src="./assets/images/fineplay-logo.png" alt="Fine Ludens" />
+          <span class="brand-fallback">FINE LUDENS</span>
+        </a>
+        <nav class="nav-menu" aria-label="주요 메뉴">
+          <a class="nav-link is-active" href="./index.html">Product</a>
+          <a class="nav-link" href="./company.html">Company</a>
+          <a class="nav-link" href="./contact.html">Contact</a>
+        </nav>
+        <a class="btn btn-sm" href="./contact.html">Contact</a>
       </div>
     </header>
 
     <main>
-      <section class="section reveal" id="problem">
+      <section class="hero hero-fullbleed">
+        <div class="hero-media">
+          <img src="./assets/hero.png" alt="Fine Play 제품 히로 이미지" />
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="section hero-inner reveal">
+          <p class="kicker">Fine Play</p>
+          <h1 class="product-hero-title">경기의 핵심 장면을 자동 분석하는 생활스포츠 AI 플랫폼</h1>
+          <p class="subtitle">
+            Fine Play는 경기 영상을 업로드하면 하이라이트 선별, 퍼포먼스 분석, 리포트 생성을 한 흐름으로 연결해
+            팀과 선수가 더 빠르게 경기를 이해하도록 돕습니다.
+          </p>
+          <div class="hero-cta">
+            <a class="btn" href="https://www.fineplay.kr/">Fine Play 바로가기</a>
+            <a class="btn ghost" href="./company.html">Company 보기</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal">
         <p class="kicker">Problem</p>
-        <h2>기록은 쌓이는데, 성장은 보이지 않습니다.</h2>
+        <h2>생활스포츠 분석은 아직도 느리고, 어려우며, 비표준적입니다.</h2>
         <div class="grid grid-3">
           <article class="card">
-            <h3>영상은 존재하나 분석은 부재</h3>
-            <p>경기 영상은 촬영되지만 전술·플레이 단위 해석이 어려움</p>
+            <h3>촬영 후 활용 단절</h3>
+            <p>경기 영상은 많지만 대부분 단순 시청으로 끝나고, 분석 가능한 데이터로 이어지지 않습니다.</p>
           </article>
           <article class="card">
-            <h3>피드백은 있으나 기준은 없음</h3>
-            <p>코칭이 경험과 감각 중심으로 반복되고 비교 기준이 부재</p>
+            <h3>수작업 분석의 고비용</h3>
+            <p>경기별 수작업 분석은 많은 시간이 들고 반복 운영이 어려워 실무 적용성이 낮습니다.</p>
           </article>
           <article class="card">
-            <h3>데이터는 있으나 활용되지 않음</h3>
-            <p>수치 데이터가 있어도 경기 맥락과 성장 관리로 연결되지 않음</p>
+            <h3>피드백 접근성 격차</h3>
+            <p>전문 코칭/분석 리소스가 제한되어, 생활스포츠 참여자는 성장 피드백을 받기 어렵습니다.</p>
           </article>
         </div>
       </section>
 
-      <section class="section reveal" id="solution">
+      <section class="section reveal">
         <p class="kicker">Solution</p>
-        <h2>Fine Play는 경기 후 남는 것을 바꿉니다.</h2>
-        <div class="timeline">
-          <article class="line-item">
-            <span>01</span>
-            <div>
-              <h3>경기 영상 업로드</h3>
-              <p>스마트폰으로 촬영한 경기 영상을 간편 업로드</p>
-            </div>
-          </article>
-          <article class="line-item">
-            <span>02</span>
-            <div>
-              <h3>AI 분석 파이프라인</h3>
-              <p>객체 인식·트래킹·이벤트 탐지로 플레이를 데이터화</p>
-            </div>
-          </article>
-          <article class="line-item">
-            <span>03</span>
-            <div>
-              <h3>성장 리포트 제공</h3>
-              <p>OVR, 스킬 차트, 히트맵, 하이라이트 영상 자동 생성</p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section reveal" id="implementation">
-        <p class="kicker">Current Implementation</p>
-        <h2>이미 동작하는 제품 구조를 확보했습니다.</h2>
+        <h2>Fine Play: 하이라이트를 분석해 플레이 가치를 만드는 플랫폼</h2>
         <div class="grid grid-3">
           <article class="card">
-            <h3>경기 운영·관리</h3>
-            <p>경기 생성, 신청, 수락·거절, 일정 관리 구현</p>
+            <h3>xH 기반 하이라이트 선별</h3>
+            <img class="solution-image" src="./assets/sol1.png" alt="xH 기반 하이라이트 선별 이미지" />
+            <p>
+              핵심 장면만 선택 분석해 프레임 처리량을 줄이고 분석 효율을 높입니다. xH(Expected Highlight) 기준으로
+              공격 전개와 결정적 상황을 우선 선별해, 분석자가 처음부터 전체 영상을 반복 확인하지 않아도 바로 의미 있는
+              장면에 집중할 수 있습니다.
+            </p>
           </article>
           <article class="card">
-            <h3>영상 분석 파이프라인</h3>
-            <p>영상 입력 → AI 분석 → 결과 화면 출력 흐름 구현 완료</p>
+            <h3>Vision AI 퍼포먼스 분석</h3>
+            <img class="solution-image" src="./assets/sol2.png" alt="Vision AI 퍼포먼스 분석 이미지" />
+            <p>
+              패스, 슈팅, 전개 기여도를 플레이 단위로 분석해 맥락 중심 리포트를 제공합니다. 단순 스탯 나열이 아니라
+              경기 흐름 안에서 어떤 선택이 찬스를 만들었는지 시각적으로 보여줘, 선수와 코치진이 개선 포인트를 더 빠르게
+              공유할 수 있습니다.
+            </p>
           </article>
           <article class="card">
-            <h3>결과 리포트 UI</h3>
-            <p>개인·팀 단위 지표와 경기별 요약을 시각화해 제공</p>
+            <h3>하이라이트 콘텐츠 자동화</h3>
+            <img class="solution-image" src="./assets/sol3.png" alt="하이라이트 콘텐츠 자동화 이미지" />
+            <p>
+              분석 결과를 리포트와 SNS 공유형 콘텐츠로 연결해 사용자 참여를 확대합니다. 경기 직후 팀 운영, 선수 피드백,
+              대회 홍보에 바로 활용할 수 있는 형태로 자동 가공되어, 분석에서 커뮤니케이션까지 이어지는 실행 속도를
+              높여줍니다.
+            </p>
           </article>
         </div>
       </section>
 
-      <section class="section reveal" id="technology">
-        <p class="kicker">Core Technology</p>
-        <h2>영상을 플레이 단위 데이터로 해석합니다.</h2>
-        <div class="grid grid-3">
-          <article class="card soft">
-            <h3>객체 인식·트래킹</h3>
-            <p>선수와 공을 자동 인식하고 이동 경로·속도·방향을 추적</p>
-          </article>
-          <article class="card soft">
-            <h3>플레이 이벤트 분석</h3>
-            <p>패스·슈팅·태클 등 이벤트를 자동 탐지하고 맥락을 구분</p>
-          </article>
-          <article class="card soft">
-            <h3>리포트 자동 생성</h3>
-            <p>히트맵·이벤트 맵·핵심 지표·하이라이트를 자동 출력</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section reveal stats" id="market">
-        <p class="kicker">Market Size</p>
-        <h2>성장 관리 공백 시장은 충분히 큽니다.</h2>
+      <section class="section reveal stats">
+        <p class="kicker">Technology</p>
+        <h2>검증된 기술 지표로 실전에 적용하고 있습니다.</h2>
+        <img class="tech-image" src="./assets/ai2.png" alt="AI 기술 이미지" />
+        <p class="tech-caption">Fine Ludens 주관 동두천시장배 전국대학동아리축구대회 CAMP-US 컵</p>
         <div class="grid grid-3">
           <article class="card stat">
-            <h3>TAM</h3>
-            <p class="num" data-target="6.7">0</p>
-            <p>조 원</p>
+            <h3>mAP@50</h3>
+            <p class="num" data-target="88.5">0</p>
+            <p>객체 탐지 성능</p>
           </article>
           <article class="card stat">
-            <h3>SAM</h3>
-            <p class="num" data-target="6700">0</p>
-            <p>억 원</p>
+            <h3>Precision</h3>
+            <p class="num" data-target="93.5">0</p>
+            <p>탐지 정확도</p>
           </article>
           <article class="card stat">
-            <h3>SOM</h3>
-            <p class="num" data-target="90">0</p>
-            <p>억 원 (상단 기준)</p>
+            <h3>Recall</h3>
+            <p class="num" data-target="83.6">0</p>
+            <p>핵심 장면 포착률</p>
           </article>
         </div>
       </section>
 
-      <section class="section reveal" id="model">
-        <p class="kicker">Business Model</p>
-        <h2>B2C에서 B2B/B2G, 플랫폼까지 확장합니다.</h2>
-        <div class="grid grid-2">
-          <article class="card">
-            <h3>Core BM</h3>
-            <p>B2C 분석 서비스: 개인 성장 리포트, 팀 구독 분석</p>
-          </article>
-          <article class="card">
-            <h3>Scale-up BM</h3>
-            <p>B2B/B2G 솔루션: 대회 분석, 기록 시스템, 통계 리포트</p>
-          </article>
-          <article class="card">
-            <h3>Platform BM</h3>
-            <p>매칭·대관 중개 및 타겟 광고 기반 수익 구조</p>
-          </article>
-          <article class="card">
-            <h3>Future BM</h3>
-            <p>스카우팅 리포트, 데이터 API, 글로벌 확장</p>
-          </article>
+      <section class="section reveal trust">
+        <p class="kicker">Trusted By</p>
+        <h2>대회·리그·기관과 함께 실전에서 검증하고 있습니다.</h2>
+        <div class="trust-marquee">
+          <div class="trust-track">
+            <div class="trust-group" aria-hidden="false">
+              <span class="logo-pill"><img src="./assets/logo/hyu.png" alt="HYU LEAGUE" /></span>
+              <span class="logo-pill"><img src="./assets/logo/eskara.png" alt="ESKARA CUP" /></span>
+              <span class="logo-pill"><img src="./assets/logo/sufa.png" alt="SUFA" /></span>
+              <span class="logo-pill"><img src="./assets/logo/k3.png" alt="K3 DATA PARTNER" /></span>
+              <span class="logo-pill"><img src="./assets/logo/Campuscup.png" alt="CAMP-US CUP" /></span>
+              <span class="logo-pill"><img src="./assets/logo/rise.png" alt="경기북부 RISE" /></span>
+              <span class="logo-pill"><img src="./assets/logo/itop21.png" alt="ITOP21SPORTS" /></span>
+              <span class="logo-pill"><img src="./assets/logo/wk.png" alt="WK" /></span>
+              <span class="logo-pill"><img src="./assets/logo/ddc%20fa.png" alt="DDC FA" /></span>
+              <span class="logo-pill">
+                <img src="./assets/logo/%EB%8F%99%EB%91%90%EC%B2%9C.png" alt="동두천" />
+              </span>
+            </div>
+            <div class="trust-group" aria-hidden="true">
+              <span class="logo-pill"><img src="./assets/logo/hyu.png" alt="" /></span>
+              <span class="logo-pill"><img src="./assets/logo/eskara.png" alt="" /></span>
+              <span class="logo-pill"><img src="./assets/logo/sufa.png" alt="" /></span>
+              <span class="logo-pill"><img src="./assets/logo/k3.png" alt="" /></span>
+              <span class="logo-pill"><img src="./assets/logo/Campuscup.png" alt="" /></span>
+              <span class="logo-pill"><img src="./assets/logo/rise.png" alt="" /></span>
+              <span class="logo-pill"><img src="./assets/logo/itop21.png" alt="" /></span>
+              <span class="logo-pill"><img src="./assets/logo/wk.png" alt="" /></span>
+              <span class="logo-pill"><img src="./assets/logo/ddc%20fa.png" alt="" /></span>
+              <span class="logo-pill">
+                <img src="./assets/logo/%EB%8F%99%EB%91%90%EC%B2%9C.png" alt="" />
+              </span>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="section reveal" id="traction">
-        <p class="kicker">Traction & Validation</p>
-        <h2>현장에서 이미 가설을 검증했습니다.</h2>
-        <div class="grid grid-3">
-          <article class="card accent">
-            <h3>사용자 만족도</h3>
-            <p class="large">87%</p>
-            <p>실증 참여 사용자 조사 기준</p>
-          </article>
-          <article class="card accent">
-            <h3>MVP 파트너 팀</h3>
-            <p class="large">3팀</p>
-            <p>팀 단위 반복 사용 모델 검증</p>
-          </article>
-          <article class="card accent">
-            <h3>B2G 실행</h3>
-            <p class="large">동두천시 협업</p>
-            <p>대회 분석·리포트 적용 및 매출 창출</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section reveal" id="roadmap">
-        <p class="kicker">Roadmap</p>
-        <h2>분석 도구에서 데이터 플랫폼으로.</h2>
-        <div class="timeline vertical">
-          <article class="line-item">
-            <span>Now</span>
-            <div>
-              <h3>Step 1: 분석 엔진 고도화</h3>
-              <p>MVP 완성, 실증 확대, 반복 사용 구조 정착</p>
-            </div>
-          </article>
-          <article class="line-item">
-            <span>2026</span>
-            <div>
-              <h3>Step 2: 운영 통합</h3>
-              <p>리그·대회 운영 솔루션 상용화, B2B/B2G 확대</p>
-            </div>
-          </article>
-          <article class="line-item">
-            <span>2027+</span>
-            <div>
-              <h3>Step 3: 글로벌 확장</h3>
-              <p>데이터 API, 스카우팅 서비스, 글로벌 시장 진출</p>
-            </div>
-          </article>
+      <section class="section reveal mid-cta">
+        <div class="mid-cta-box">
+          <p class="kicker">Start With Fine Ludens</p>
+          <h2>모든 경기가 특별한 경험이 되는 생활스포츠 생태계를 함께 만듭니다.</h2>
+          <div class="hero-cta">
+            <a class="btn" href="https://www.fineplay.kr/">Fine Play 바로가기</a>
+            <a class="btn ghost" href="./company.html">Fine Ludens 보기</a>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer class="section reveal" id="contact">
-      <p class="kicker">Contact</p>
-      <h2>Fine Play와 함께 축구 데이터 생태계를 만듭니다.</h2>
+    <footer class="section reveal page-footer">
       <div class="contact-box">
-        <p><strong>대표/담당자</strong> 이용근</p>
+        <p><strong>법인명</strong> 주식회사 파인루덴스</p>
         <p><strong>Email</strong> official@fineplay.kr</p>
-        <p><strong>Instagram</strong> @FinePlay</p>
-        <p><strong>Phone</strong> 010-6343-1823</p>
         <p><strong>Website</strong> fineplay.kr</p>
       </div>
-      <form
-        class="contact-form"
-        action="https://formspree.io/f/xrealedg"
-        method="POST"
-      >
-        <label>
-          <span>회사명</span>
-          <input type="text" name="company" placeholder="회사 또는 팀 이름" required />
-        </label>
-        <label>
-          <span>담당자</span>
-          <input type="text" name="name" placeholder="성함" required />
-        </label>
-        <label>
-          <span>연락처</span>
-          <input type="text" name="phone" placeholder="010-0000-0000" />
-        </label>
-        <label>
-          <span>이메일</span>
-          <input type="email" name="email" placeholder="name@company.com" required />
-        </label>
-        <label class="full">
-          <span>문의 내용</span>
-          <textarea
-            name="message"
-            rows="5"
-            placeholder="제휴 목적과 필요한 내용을 간단히 남겨주세요."
-            required
-          ></textarea>
-        </label>
-        <input type="hidden" name="_subject" value="Fine Play 제휴 문의" />
-        <button class="btn" type="submit">제휴 문의 보내기</button>
-      </form>
     </footer>
 
     <script src="./assets/scripts/main.js"></script>

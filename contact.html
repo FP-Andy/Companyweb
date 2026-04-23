@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fine Ludens | 문의</title>
+    <meta name="description" content="Fine Ludens 도입/제휴 문의 페이지" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/styles/main.css" />
+  </head>
+  <body>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <header class="site-header reveal">
+      <div class="site-nav section">
+        <a class="brand" aria-label="Fine Ludens" href="./index.html">
+          <img class="brand-logo" src="./assets/images/fineplay-logo.png" alt="Fine Ludens" />
+          <span class="brand-fallback">FINE LUDENS</span>
+        </a>
+        <nav class="nav-menu" aria-label="주요 메뉴">
+          <a class="nav-link" href="./index.html">Product</a>
+          <a class="nav-link" href="./company.html">Company</a>
+          <a class="nav-link is-active" href="./contact.html">Contact</a>
+        </nav>
+        <a class="btn btn-sm" href="./contact.html">Contact</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="section reveal page-hero page-hero-sm">
+        <p class="kicker">Contact</p>
+        <h1>Fine Ludens와 함께<br />생활스포츠의 데이터 표준을<br />만듭니다.</h1>
+        <p class="subtitle">대회/리그 운영, 팀 분석, 제품 제휴 등 필요한 내용을 남겨주세요.</p>
+      </section>
+
+      <section class="section reveal">
+        <div class="contact-box">
+          <p><strong>법인명</strong> 주식회사 파인루덴스</p>
+          <p><strong>대표</strong> 이용근</p>
+          <p><strong>Email</strong> official@fineplay.kr</p>
+          <p><strong>Website</strong> fineplay.kr</p>
+        </div>
+        <form class="contact-form" action="https://formspree.io/f/xrealedg" method="POST">
+          <label>
+            <span>기관/팀명</span>
+            <input type="text" name="company" placeholder="기관, 대회, 팀 이름" required />
+          </label>
+          <label>
+            <span>담당자</span>
+            <input type="text" name="name" placeholder="성함" required />
+          </label>
+          <label>
+            <span>연락처</span>
+            <input type="text" name="phone" placeholder="010-0000-0000" />
+          </label>
+          <label>
+            <span>이메일</span>
+            <input type="email" name="email" placeholder="name@company.com" required />
+          </label>
+          <label class="full">
+            <span>문의 내용</span>
+            <textarea
+              name="message"
+              rows="5"
+              placeholder="도입 목적(대회/리그/팀 운영 등)과 필요한 내용을 남겨주세요."
+              required
+            ></textarea>
+          </label>
+          <input type="hidden" name="_subject" value="Fine Ludens 문의" />
+          <button class="btn" type="submit">문의 보내기</button>
+        </form>
+      </section>
+    </main>
+
+    <script src="./assets/scripts/main.js"></script>
+  </body>
+</html>
