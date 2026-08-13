@@ -1,0 +1,326 @@
+/* Fine Ludens — 연속 스크롤 4면 (홈·제품·회사·문의)
+   규칙: 섹션 배경색·경계선 없음(기업소개서 제외), 인라인 스타일 유지, data-r 훅 보존
+*/
+
+@font-face { font-family: 'Giants-Inline'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Inline.woff2') format('woff2'), url('https://cdn.jsdelivr.net/gh/fontbee/font@main/LOTTE/Giants-Inline.woff2') format('woff2'); font-weight: normal; font-style: normal; font-display: swap; }
+html { scroll-behavior: smooth; scroll-padding-top: 58px; }
+html, body { margin: 0; padding: 0; }
+[data-r="page"] { view-timeline-name: --panel; view-timeline-axis: block; }
+/* 폭은 풀블리드(중앙 1440px 컨테이너 제거). 가장자리 여백만 --gutter 로 관리.
+   이 값 하나만 바꾸면 5면 전체에 반영됩니다. 0px = 완전 밀착. */
+:root { --gutter: 40px; }
+[data-r="pad"] { padding: 84px var(--gutter) !important; }
+[data-r="rail"] { padding: 108px 22px !important; }
+body { background: #f5f0e8; word-break: keep-all; line-break: strict; text-wrap: pretty; font-family: "Wanted Sans Variable", "Wanted Sans", "Pretendard Variable", Pretendard, system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+h1, h2, h3, h4, p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+a:hover { color: #f26a00; }
+@keyframes rise { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+@keyframes zoomout { from { transform: scale(1.18); } to { transform: scale(1); } }
+@keyframes growx { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes enterSlide { from { opacity: 0; filter: blur(10px); } to { opacity: 1; filter: blur(0); } }
+@keyframes washDrift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-3%, -6%, 0); } }
+@keyframes marqueeX { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+[data-r="marquee"] { display: flex; gap: 10px; width: max-content; animation: marqueeX 34s linear infinite; }
+[data-r="marquee"] > div { flex: none; width: 208px; }
+[data-r="marqueewrap"]:hover [data-r="marquee"] { animation-play-state: paused; }
+/* ── 모션 시스템 v2 ─────────────────────────────────────────────────
+   성격: 영상 분석의 어휘. 프레임이 넘어가고, 탐지 박스가 물리고, 스캔이 훑고,
+   카메라가 플레이를 따라간다. 빠른 어택 + 미세한 오버슈트 + 단호한 안착.
+   금지: 부유하는 ease-in-out, 네온 글로우, 파티클, 무한 루프 장식.
+   성능: transform / opacity / clip-path 만 애니메이트. letter-spacing·width 금지(레이아웃 스래싱).
+   폴백: 모든 키프레임의 100%는 '정지 상태'. 스크롤 타임라인 미지원(Firefox)에서
+        duration:auto 가 0s로 계산되어 종료 상태로 즉시 안착 = 콘텐츠 100% 노출.
+─────────────────────────────────────────────────────────────────── */
+
+/* 제목: 아래에서 잘려 올라오며 살짝 지나쳤다가 물린다 */
+@keyframes maskUp {
+  from { opacity: 0; clip-path: inset(106% 0 0 0); transform: translateY(64px) skewY(2.4deg); }
+  to   { opacity: 1; clip-path: inset(-14% 0 -6% 0); transform: none; }
+}
+/* 라벨·리드: 좌에서 밀고 들어오는 와이프 */
+@keyframes maskWipeX {
+  from { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(-18px); }
+  to   { opacity: 1; clip-path: inset(0 -2% 0 0); transform: none; }
+}
+/* 보조 텍스트: 초점이 맞는 느낌 */
+@keyframes techIn {
+  from { opacity: 0; transform: translateY(48px) scale(0.968); filter: blur(6px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+/* 이미지: 위에서 아래로 훑어 내려오며 카메라가 안착 */
+@keyframes scanIn {
+  0%   { opacity: 0; clip-path: inset(0 0 100% 0); transform: scale(1.07); }
+  100% { opacity: 1; clip-path: inset(0 0 0 0); transform: scale(1); }
+}
+/* 카드·타일 */
+@keyframes liftIn {
+  from { opacity: 0; transform: translateY(74px) scale(0.962); }
+  to   { opacity: 1; transform: none; }
+}
+/* 지표 숫자: 확 튀어 올라와 물린다 */
+@keyframes counterUp {
+  from { opacity: 0; transform: translateY(40px) scale(0.84); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes wipeUp {
+  from { opacity: 0; transform: translateY(56px); clip-path: inset(0 0 100% 0); }
+  to   { opacity: 1; transform: none; clip-path: inset(0 0 -12% 0); }
+}
+/* 대형 장식 배경 — 느리게 흘러 들어와 자리를 잡는다.
+   translateY(-50%) 는 세로 중앙 정렬용이라 모든 프레임에 그대로 유지해야 한다.
+   빼먹으면 이미지가 아래로 반쯤 떨어진다. */
+@keyframes evolveIn {
+  from { opacity: 0; transform: translateY(-50%) translateX(5%) scale(1.06); filter: blur(5px); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(-1.5%) scale(1); filter: blur(0); }
+}
+@keyframes slideL {
+  from { opacity: 0; transform: translateX(-44px); }
+  to   { opacity: 1; transform: none; }
+}
+[data-h="tile"] { transition: transform 260ms cubic-bezier(.2,.7,.2,1), box-shadow 260ms ease; }
+[data-h="tile"]:hover { transform: translateY(-5px); box-shadow: 0 18px 34px -22px rgba(21,24,18,0.45); }
+[data-h="cta"] { transition: transform 200ms cubic-bezier(.2,.7,.2,1), opacity 200ms ease; }
+[data-h="cta"]:hover { transform: translateY(-2px); opacity: 0.92; }
+[data-h="logo"] { transition: transform 240ms ease, background 240ms ease; }
+[data-h="logo"]:hover { transform: scale(1.04); }
+
+/* ── 스포츠테크 시그니처 모션 ────────────────────────────────────────
+   이 제품은 경기 영상에서 객체를 탐지하고 핵심 장면을 골라낸다.
+   그 동작 자체를 모션 어휘로 쓴다. 장식이 아니라 제품 설명이다.
+   훅은 기존 data-h(호버)와 같은 계열의 data-fx(연출) 속성으로 건다.
+─────────────────────────────────────────────────────────────────── */
+
+
+/* ── 커버 다이브 — home / product / company 상단 커버 공통 시그니처 ──
+   레퍼런스 조사 결과: &EVER 히어로는 fadeIn 10px로 사실상 정적이고,
+   Stech는 float·pulseGlow 같은 범용 SaaS 모션이다. 이 카테고리의 커버는 비어 있다.
+   그래서 여기를 차별화 지점으로 잡는다.
+
+   원리는 시차(parallax differential). 세 층이 서로 다른 속도로 움직인다.
+     배경   느리게 안으로 밀려 들어가고   (scale 1.00 -> 1.34)
+     베일   가장자리부터 종이색으로 닫히고
+     콘텐츠 가장 빠르게 위로 빠져나간다   (translateY -19%, 초점 이탈)
+   속도 차가 깊이를 만들고, 그 깊이가 '빠져드는' 감각의 실체다.
+
+   베일 색은 세 면 모두 본문 종이색(#f5f0e8). 커버가 본문으로 녹아들어
+   스크롤이 페이지 전환이 아니라 한 공간의 통과로 읽힌다.
+
+   타이밍 주의: 커버는 문서 최상단이라 로드 시점에 이미 cover ≈53% 지점이다.
+   그래서 모든 구간을 그 이후(54~60%)에서 시작시킨다. 로드 화면은 건드리지 않는다.
+─────────────────────────────────────────────────────────────────── */
+[data-fx~="cover"] { position: relative; overflow: clip; }
+
+/* ── 커버 진입 연출 (페이지 접근 순간, 시간 기반) ─────────────────────
+   다이브가 '나갈 때'라면 이건 '들어올 때'다.
+   종이(#f5f0e8)가 화면을 덮은 상태에서 시작해, 가운데부터 구멍이 열리며
+   그 종이막이 보는 사람 쪽으로 확장돼 지나간다. 조리개가 열리는 방식이라
+   장면 앞으로 다가가는 게 아니라 장면 안으로 들어가는 감각이 난다.
+
+   스크롤 기반 coverDive / coverVeil / coverLift 와 충돌하지 않는다.
+   진입은 시간 타임라인(auto), 이탈은 view() 타임라인으로 분리했고,
+   같은 요소를 쓰는 경우 건드리는 속성을 나눠 놓았다(배경: transform vs filter).
+─────────────────────────────────────────────────────────────────── */
+/* 조리개 커튼은 걷어냈다(2026-08-13 결정).
+   덮개를 씌우면 언젠가 걷어내야 하고, 걷어내는 순간이 곧 이음매가 된다.
+   배경이 스스로 초점을 잡아 들어오면 층이 하나라 이음매 자체가 생기지 않는다.
+   진입 연출은 이제 heroFocus(배경) + heroRise(문구) 둘 뿐이다.
+
+   커버는 첫 화면을 꽉 채운다. 헤더 52px + 스크롤 진행바 3px 를 뺀 높이.
+   인라인 min-height: 88vh 를 이겨야 하므로 !important. */
+[data-fx~="cover"],
+[data-fx~="cover"] > [data-r="pad"] { min-height: calc(100svh - 55px) !important; }
+
+/* 배경 진입 — 흐리고 옅은 상태에서 초점이 잡히며 진해진다.
+   불투명도를 함께 올리는 게 핵심이다. 낮을 때는 아래 종이색이 비쳐
+   화면이 종이에서 배어 나오는 것처럼 읽히고, 그대로 정지 화면에 안착한다.
+   coverDive 는 transform 만 건드리므로 같은 요소에서 공존한다. */
+@keyframes heroFocus {
+  from { filter: blur(16px) saturate(0.62); opacity: 0.30; }
+  to   { filter: blur(0)    saturate(1);    opacity: 1; }
+}
+
+/* 1층 배경 — 인라인 animation-name: coverDive 로 연결 */
+@keyframes coverDive {
+  0%   { transform: scale(1.00) translate3d(0, 0, 0); }
+  100% { transform: scale(1.34) translate3d(0, -3.5%, 0); }
+}
+
+/* 2층 베일 */
+[data-fx~="cover"]::after {
+  content: ""; position: absolute; inset: -1px; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(128% 88% at 50% 46%, rgba(245,240,232,0) 34%, rgba(245,240,232,0.60) 78%, rgba(245,240,232,0.96) 100%),
+    linear-gradient(180deg, rgba(245,240,232,0) 58%, rgba(245,240,232,0.92) 100%);
+  opacity: 0;
+  animation-name: coverVeil; animation-duration: auto; animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(.42,0,.72,1);
+  animation-timeline: view(); animation-range: cover 54% cover 100%;
+}
+@keyframes coverVeil { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+/* 3층 콘텐츠 */
+/* 콘텐츠는 두 애니메이션을 함께 쓴다.
+   heroRise  = 진입(시간 기반). fill-mode: backwards 라서 끝나면 값을 놓는다.
+   coverLift = 이탈(스크롤 기반). heroRise 가 손을 뗀 뒤 그대로 이어받는다.
+   backwards 가 핵심이다. both 로 두면 진입 끝값이 영구히 남아 스크롤 이탈이 죽는다. */
+[data-fx~="cover"] > [data-r="pad"] {
+  animation-name: coverLift, heroRise;
+  animation-duration: auto, 1900ms;
+  animation-delay: 0s, 300ms;
+  animation-fill-mode: both, backwards;
+  animation-timing-function: cubic-bezier(.36,0,.62,1), cubic-bezier(.2,.66,.2,1);
+  animation-timeline: view(), auto;
+  animation-range: cover 60% cover 100%, normal;
+  will-change: transform, opacity, filter;
+}
+@keyframes heroRise {
+  from { opacity: 0; transform: translate3d(0, 44px, 0) scale(0.984); filter: blur(5px); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1);        filter: blur(0); }
+}
+@keyframes coverLift {
+  0%   { transform: translate3d(0,0,0) scale(1); opacity: 1; filter: blur(0); }
+  100% { transform: translate3d(0,-19%,0) scale(0.955); opacity: 0.04; filter: blur(6px); }
+}
+
+
+/* 3) steps — 자식이 프레임 단위로 끊어져 도착한다(연속 페이드 아님). */
+[data-fx~="steps"] > * {
+  animation-name: stepIn; animation-duration: auto; animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(.2,.85,.2,1);
+  animation-timeline: view(); animation-range: cover 19% cover 67%;
+}
+[data-fx~="steps"] > *:nth-child(2) { animation-range: cover 25% cover 70%; }
+[data-fx~="steps"] > *:nth-child(3) { animation-range: cover 30% cover 74%; }
+[data-fx~="steps"] > *:nth-child(4) { animation-range: cover 36% cover 77%; }
+[data-fx~="steps"] > *:nth-child(5) { animation-range: cover 39% cover 82%; }
+[data-fx~="steps"] > *:nth-child(6) { animation-range: cover 45% cover 87%; }
+@keyframes stepIn {
+  0%   { opacity: 0; transform: translateY(58px); }
+  40%  { opacity: 1; transform: translateY(14px); }
+  60%  { transform: translateY(14px); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* 4) 제목 줄 단위 스태거. 각 줄 <span style="display:block">에 --i 를 준다. */
+[data-fx~="lines"] > span {
+  display: block;
+  animation-name: maskUp; animation-duration: auto; animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(.14,.92,.18,1);
+  animation-timeline: view();
+  animation-range: cover calc(16% + var(--i, 0) * 6%) cover calc(62% + var(--i, 0) * 6%);
+}
+/* 모션은 항상 재생됩니다(사용자 지시, 2026-08-13).
+   prefers-reduced-motion 게이트와 헤더 MOTION 체크박스는 제거되었습니다.
+   되돌리려면 아래 블록의 주석을 해제하십시오.
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
+  [data-r="page"] { filter: none !important; opacity: 1 !important; }
+}
+*/
+@media (max-width: 900px) {
+  [data-r="timeline"] { grid-auto-columns: 74vw !important; }
+  [data-r="index"] { display: none; }
+  [data-r="rail"] { display: none; }
+  [data-r="page"] { grid-template-columns: 1fr !important; }
+  [data-r="two"], [data-r="three"] { grid-template-columns: 1fr !important; gap: 30px !important; }
+  [data-r="logos"] { grid-template-columns: repeat(2, 1fr) !important; }
+  :root { --gutter: 24px; }
+  [data-r="pad"] { padding: 64px var(--gutter) !important; }
+  [data-r="hero"] { height: 220px !important; }
+  [data-r="tall"] { min-height: 260px !important; height: 260px !important; }
+  [data-r="mid"] { height: 210px !important; }
+  [data-r="navlinks"] { gap: 14px !important; font-size: 10px !important; }
+  [data-r="head"] { padding: 11px 16px !important; }
+  [data-r="foot"] { padding: 28px 18px !important; }
+}
+@media (max-width: 560px) {
+  [data-r="navlinks"] > span { display: none; }
+  :root { --gutter: 18px; }
+  [data-r="pad"] { padding: 56px var(--gutter) !important; }
+}
+
+@media (max-width: 900px) {
+  [data-r="head"] { flex-wrap: wrap; row-gap: 8px; }
+  [data-r="navlinks"] { flex-wrap: wrap; justify-content: flex-start; gap: 4px 14px !important; width: 100%; }
+  [data-r="navlinks"] > a { min-height: 40px; display: inline-flex; align-items: center; }
+  [data-r="navlinks"] > label { order: 9; }
+}
+@media (max-width: 560px) {
+  [data-r="navlinks"] { font-size: 10px !important; letter-spacing: 0.1em !important; gap: 2px 12px !important; }
+  [data-r="navlinks"] > a:last-of-type { padding: 10px 14px !important; }
+}
+
+[data-r="page"] { overflow-x: clip; }
+
+@media (max-width: 900px) {
+  [data-r="index"], [data-r="rail"] { display: none !important; }
+  [data-r="page"] img[src*="mark-cream"], [data-r="page"] img[src*="mark-black"], [data-r="page"] img[src*="mark-orange"] { max-width: 56vw !important; right: 0 !important; }
+}
+
+/* ── 브라우저가 그리는 표면 ─────────────────────────────────────────
+   선택 영역, 캐럿, 포커스 링, 스크롤바는 손대지 않으면 어떤 디자인에도
+   속하지 않는 기본값으로 남는다. 팔레트에서 끌어와 페이지에 편입시킨다.
+─────────────────────────────────────────────────────────────────── */
+::selection { background: #f26a00; color: #fff6ed; }
+html { caret-color: #151812; accent-color: #f26a00; scrollbar-color: #cec7ba #f5f0e8; }
+:focus-visible { outline: 2px solid #f26a00; outline-offset: 3px; }
+
+/* 제목 줄바꿈 균형.
+   본문에는 text-wrap: pretty 가 걸려 있는데 제목에는 아무것도 없었다.
+   이 사이트는 한글이라 word-break: keep-all 이 필수인데, 단어 중간을 끊지 않으므로
+   줄 길이 편차가 오히려 커진다. 마지막 줄에 한 단어만 떨어지는 현상이 그래서 생긴다.
+   balance 는 각 줄 길이를 고르게 맞춰 그 편차를 줄인다. keep-all 과 짝을 이루는 규칙이다. */
+h1, h2, h3, h4 { text-wrap: balance; }
+
+/* 폼 입력 상태.
+   :user-invalid 는 사용자가 값을 넣고 벗어난 뒤에만 발동하므로,
+   페이지를 열자마자 필수 항목이 전부 빨갛게 되는 :invalid 의 문제가 없다.
+   네이티브 말풍선에만 의존하지 않고 어느 칸이 문제인지 지면에서 바로 보이게 한다. */
+form input:user-invalid,
+form textarea:user-invalid {
+  border-color: #b84a00 !important;
+  box-shadow: 0 0 0 3px rgba(184, 74, 0, 0.14);
+}
+form input:user-valid,
+form textarea:user-valid { border-color: #a8b09c !important; }
+form button[type="submit"]:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* 건너뛰기 링크 — 헤더 내비를 지나쳐 본문으로. 키보드 포커스를 받을 때만 나타난다.
+   display:none 이나 visibility:hidden 은 포커스 자체를 막으므로 쓰면 안 된다. */
+.skip-main {
+  position: absolute; left: 8px; top: -60px; z-index: 99;
+  padding: 12px 18px;
+  background: #151812; color: #f5f0e8;
+  font-family: 'Archivo', sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  transition: top 160ms cubic-bezier(.2,.7,.2,1);
+}
+.skip-main:focus { top: 8px; color: #f5f0e8; }
+
+/* ── 컴포넌트 등장 ────────────────────────────────────────────────
+   스크롤 스크럽(animation-timeline: view())은 스크롤 양에 비례해 재생·되감기되어
+   '서서히 드러나는' 느낌이 된다. 기존 fineludens 방식대로, 요소가 임계점을 넘으면
+   한 번 발동하고 재생은 시간 축이 맡는다.
+
+   `html.js` 는 <head> 인라인 스크립트가 첫 페인트 전에 붙인다.
+   JS 가 꺼져 있으면 이 규칙이 적용되지 않아 애니메이션이 로드 즉시 재생되고
+   콘텐츠는 정상 노출된다. 예전 사이트의 '.reveal { opacity: 0 }' 로 인한
+   백지 화면 문제를 반복하지 않기 위한 구조다.
+─────────────────────────────────────────────────────────────── */
+html.js [data-rv]:not(.rv-on) {
+  animation-name: none !important;   /* 아직 애니메이션을 붙이지 않는다 */
+  opacity: 0 !important;             /* 초기 은닉은 CSS 가 직접 책임진다 */
+}
+/* .rv-on 이 붙는 순간 위 규칙이 풀리고, 인라인의 animation-name 이 살아나
+   애니메이션이 0 부터 새로 재생된다. play-state 해석에 의존하지 않는다. */
+
+/* 레이어 승격 타이밍.
+   will-change 가 없으면 브라우저는 애니메이션이 '시작된 뒤에' 레이어를 만든다.
+   그 승격이 일어나는 몇 프레임이 눈에 띄는 끊김이 된다.
+   rv-arm 은 요소가 화면 아래 30% 밖에 있을 때 미리 붙어 레이어를 준비시키고,
+   재생이 끝나면 rv-done 이 붙어 승격을 해제한다.
+   (123개를 계속 승격 상태로 두면 그 자체가 메모리·합성 부담이 된다) */
+html.js [data-rv].rv-arm:not(.rv-done) { will-change: transform, opacity, filter, clip-path; }
+html.js [data-rv].rv-done { will-change: auto; }

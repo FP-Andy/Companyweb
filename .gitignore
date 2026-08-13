@@ -1,2 +1,15 @@
 .DS_Store
 **/.DS_Store
+
+# 디자인 개편 인계 문서 (로컬 전용, 커밋하지 않음)
+.design/
+PRODUCT.md
+
+# 원본 자산 아카이브 (웹 배포 대상 아님)
+_archive/
+
+# 웹 배포 대상 아님 — 로컬에만 보관 (공개 URL 노출 방지)
+references/
+*.pdf
+발표자료.pdf
+사회적기업 사업계획서.pdf
