@@ -230,6 +230,30 @@ data-r="head" → <header>    data-r="page" → <section>    data-r="foot" → <
 - **유행하는 ~리즘의 이식.** 글래스모피즘·브루탈리즘·베이지+브라스 프리미엄 팔레트 등을
   덧입히지 마십시오. 방향이 이미 정해져 있습니다.
 
+## 브랜드 마크와 워드마크 (2026-08-14 확정)
+
+- **브랜드 오렌지는 `#ff7400` 입니다.** 정본은 `assets/brand/lockup-orange.png` 입니다.
+  `mark-orange.png` 와 `apple-touch-icon.png` 이 `#f26a00` 으로 어긋나 있던 것을
+  정본에 맞췄습니다. 브랜드 자산의 오렌지를 다시 바꾸지 마십시오.
+- **화면 UI 의 강조색 `#f26a00` 은 별개 체계입니다.** 브랜드 마크 색과 같지
+  않아도 됩니다. 작은 본문에는 대비를 통과하는 `#b84a00` 을 씁니다
+  (`#ff7400` 은 종이 위 2.39:1, `#f26a00` 은 2.71:1 로 둘 다 소형 텍스트 기준 미달).
+- **워드마크는 Ethnocentric 입니다.** 헤더가 Archivo 로 조판되어 있던 것을
+  `assets/brand/wordmark-orange.svg` 로 교체했습니다. 정본 lockup 의 자간에
+  맞추려고 -0.0194em 을 적용했습니다(폭/캡높이 12.375).
+
+**폰트 라이선스 — 반드시 지키십시오.**
+Ethnocentric 은 Typodermic Desktop 라이선스입니다. 동봉된 EULA 가 명시적으로
+구분합니다.
+
+- 허용: `logo`, `trademarked logo`, `images (not embedded)`, `web page (not embedded)`
+- 금지: **`web page (embedded)`**, `server`, `web template`
+
+즉 **`@font-face` 로 웹폰트 임베딩하는 것은 금지**입니다. 그래서 글자를
+윤곽선 경로로 변환한 SVG 자산으로 넣었습니다. 편하다는 이유로 폰트 파일을
+`assets/` 에 넣고 `@font-face` 를 선언하지 마십시오. 라이선스 위반입니다.
+워드마크 문구를 바꿔야 하면 SVG 를 다시 생성하십시오(fontTools + SVGPathPen).
+
 ## 접근성 기준 (2026-08-12 점검 결과 반영 — 되돌리지 마십시오)
 
 - 소형 텍스트의 오렌지는 `#b84a00`(종이 배경 대비 4.61:1). 브랜드 오렌지 `#f26a00`은 **배경·선·점·대형 활자에만** 씁니다. 13px 라벨에 `#f26a00`을 쓰면 2.71:1로 기준 미달입니다.

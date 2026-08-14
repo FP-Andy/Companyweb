@@ -431,3 +431,12 @@ html.js [data-rv].rv-done { will-change: auto; }
   background: var(--fill, #f5f0e8);
   clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 13px 100%, 0 calc(100% - 13px));
 }
+
+/* ── 가로형 로고 셀 (data-r="logowide") ──────────────────────────
+   iTOP21 SPORTS 는 가로 4.8:1 워드마크다. 정사각 마크와 같은 148px 폭에
+   넣으면 폭에 막혀 잉크 높이가 31px 로 주저앉는다(다른 로고는 74px).
+   이 셀만 넓혀 워드마크가 읽히는 크기를 확보한다. 높이를 키워봐야
+   소용없다 — 제약은 폭이다.
+──────────────────────────────────────────────────────────── */
+[data-r="marquee"] > [data-r="logowide"] { width: 320px; }
+[data-r="logowide"] { padding-left: 14px !important; padding-right: 14px !important; }
