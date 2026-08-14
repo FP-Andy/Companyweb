@@ -440,3 +440,9 @@ html.js [data-rv].rv-done { will-change: auto; }
 ──────────────────────────────────────────────────────────── */
 [data-r="marquee"] > [data-r="logowide"] { width: 320px; }
 [data-r="logowide"] { padding-left: 14px !important; padding-right: 14px !important; }
+
+/* ── 한 줄 유지 (data-r="oneline") ───────────────────────────────
+   홈 리드 문장은 넓은 화면에서 한 줄로 읽히게 한다(사용자 지시).
+   좁은 화면까지 nowrap 을 걸면 가로로 넘치므로 폭이 확보될 때만 건다.
+──────────────────────────────────────────────────────────── */
+@media (min-width: 1180px) { [data-r="oneline"] { white-space: nowrap; } }
