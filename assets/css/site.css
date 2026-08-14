@@ -324,3 +324,78 @@ html.js [data-rv]:not(.rv-on) {
    (123개를 계속 승격 상태로 두면 그 자체가 메모리·합성 부담이 된다) */
 html.js [data-rv].rv-arm:not(.rv-done) { will-change: transform, opacity, filter, clip-path; }
 html.js [data-rv].rv-done { will-change: auto; }
+
+/* ── 앱 화면 교체 (data-r="appswap") ──────────────────────────────
+   화면 아홉 장을 늘어놓으면 지면이 지저분해진다. 주제별로 네 묶음으로
+   나눠 한 자리에 겹쳐 두고, 탭을 고르면 그 묶음만 바뀐다.
+   라디오 + :checked 라서 JS 가 없고, 화살표 키로도 넘어간다.
+
+   폰 베젤은 PNG 알파에 이미 들어 있다. 여기서 테두리를 그리지 않고,
+   그림자도 사각형이 되는 box-shadow 가 아니라 알파를 따라가는
+   drop-shadow 로 준다. 원본이 221x453 뿐이라 확대하지 않는다.
+
+   겹치기는 absolute 가 아니라 grid-area 로 한다. 묶음마다 폰 개수가
+   1~3 장으로 달라 폭이 제각각인데, grid 는 가장 넓은 묶음에 맞춰 칸을
+   잡아주므로 탭을 바꿔도 지면이 흔들리지 않는다. absolute 였다면
+   좁은 화면에서 가로 스크롤을 걸 수 없다.
+─────────────────────────────────────────────────────────────── */
+[data-r="appswap"] { display: block; }
+[data-r="appswap"] input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+[data-r="apptabs"] { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 clamp(24px, 3.4vw, 54px); }
+[data-r="apptabs"] label { display: block; padding: 0 0 16px; cursor: pointer; text-align: center; border-bottom: 2px solid transparent; transition: border-color 220ms ease; }
+[data-r="apptabs"] label > b { display: block; font-size: 16.5px; font-weight: 700; letter-spacing: -0.015em; color: #8a8d84; transition: color 220ms ease; }
+[data-r="apptabs"] label > span { display: block; margin-top: 5px; max-width: 22ch; font-size: 13px; line-height: 1.5; color: #9b9e95; transition: color 220ms ease; }
+[data-r="apptabs"] label:hover > b { color: #4a4d45; }
+[data-r="appswap"] input:focus-visible + label { outline: 2px solid #f26a00; outline-offset: 4px; }
+
+[data-r="appframe"] { display: grid; margin-top: 44px; }
+[data-r="appgroup"] {
+  grid-area: 1 / 1; display: flex; justify-content: center; align-items: flex-start;
+  gap: clamp(16px, 2.4vw, 34px);
+  opacity: 0; pointer-events: none; transition: opacity 420ms cubic-bezier(.2,.7,.2,1);
+}
+[data-r="appgroup"] img {
+  display: block; flex: none; width: 221px; height: auto;
+  filter: drop-shadow(0 18px 34px rgba(21,24,18,0.17)) drop-shadow(0 3px 8px rgba(21,24,18,0.09));
+}
+
+/* 고른 묶음과 고른 탭 */
+[data-r="appswap"] input:nth-of-type(1):checked ~ [data-r="appframe"] [data-r="appgroup"]:nth-of-type(1),
+[data-r="appswap"] input:nth-of-type(2):checked ~ [data-r="appframe"] [data-r="appgroup"]:nth-of-type(2),
+[data-r="appswap"] input:nth-of-type(3):checked ~ [data-r="appframe"] [data-r="appgroup"]:nth-of-type(3),
+[data-r="appswap"] input:nth-of-type(4):checked ~ [data-r="appframe"] [data-r="appgroup"]:nth-of-type(4) { opacity: 1; pointer-events: auto; }
+
+[data-r="appswap"] input:nth-of-type(1):checked ~ [data-r="apptabs"] label:nth-of-type(1),
+[data-r="appswap"] input:nth-of-type(2):checked ~ [data-r="apptabs"] label:nth-of-type(2),
+[data-r="appswap"] input:nth-of-type(3):checked ~ [data-r="apptabs"] label:nth-of-type(3),
+[data-r="appswap"] input:nth-of-type(4):checked ~ [data-r="apptabs"] label:nth-of-type(4) { border-bottom-color: #151812; }
+[data-r="appswap"] input:nth-of-type(1):checked ~ [data-r="apptabs"] label:nth-of-type(1) > b,
+[data-r="appswap"] input:nth-of-type(2):checked ~ [data-r="apptabs"] label:nth-of-type(2) > b,
+[data-r="appswap"] input:nth-of-type(3):checked ~ [data-r="apptabs"] label:nth-of-type(3) > b,
+[data-r="appswap"] input:nth-of-type(4):checked ~ [data-r="apptabs"] label:nth-of-type(4) > b { color: #151812; }
+[data-r="appswap"] input:nth-of-type(1):checked ~ [data-r="apptabs"] label:nth-of-type(1) > span,
+[data-r="appswap"] input:nth-of-type(2):checked ~ [data-r="apptabs"] label:nth-of-type(2) > span,
+[data-r="appswap"] input:nth-of-type(3):checked ~ [data-r="apptabs"] label:nth-of-type(3) > span,
+[data-r="appswap"] input:nth-of-type(4):checked ~ [data-r="apptabs"] label:nth-of-type(4) > span { color: #4a4d45; }
+
+/* 좁은 화면 — 폰 세 장이 들어가지 않으므로 옆으로 넘겨 본다 */
+@media (max-width: 860px) {
+  [data-r="apptabs"] { gap: 0 22px; }
+  [data-r="apptabs"] label > span { display: none; }
+  [data-r="apptabs"] label { padding-bottom: 12px; min-height: 40px; }
+  [data-r="appgroup"] {
+    justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding-bottom: 10px; -webkit-overflow-scrolling: touch;
+  }
+  [data-r="appgroup"] img { scroll-snap-align: center; }
+  [data-r="appgroup"]::-webkit-scrollbar { height: 3px; }
+  [data-r="appgroup"]::-webkit-scrollbar-thumb { background: rgba(21,24,18,0.22); }
+}
+
+/* ── 인스타 콘텐츠 그리드 (data-r="insta") ────────────────────────
+   여섯 장 모두 폰 프레임이 PNG 알파에 들어 있다(221x453). 원본보다 키우면
+   뭉개지므로 이미지 자체는 max-width 221px 로 묶고, 칸만 줄여 접는다.
+─────────────────────────────────────────────────────────────── */
+@media (max-width: 1180px) { [data-r="insta"] { grid-template-columns: repeat(3, 1fr) !important; gap: 30px !important; } }
+@media (max-width: 700px)  { [data-r="insta"] { grid-template-columns: repeat(2, 1fr) !important; gap: 22px !important; } }

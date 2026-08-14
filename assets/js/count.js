@@ -53,7 +53,7 @@
   // 컴포넌트 등장 — 관찰 단위는 '컴포넌트'. 순서는 스크롤 위치가 만든다.
   // 관찰자를 둘 둔다.
   //   arm : 화면 아래 30% 밖에서 미리 붙어 레이어를 준비시킨다(끊김 방지).
-  //   on  : 화면 62% 지점을 넘으면 재생을 시작한다.
+  //   on  : 화면 72% 지점을 넘으면 재생을 시작한다.
   // 재생이 끝나면 rv-done 으로 레이어 승격을 해제한다.
   var all = [].slice.call(document.querySelectorAll('[data-rv]'));
   if (!all.length) return;
@@ -76,7 +76,7 @@
       on(e.target);
       ioOn.unobserve(e.target);
     });
-  }, { threshold: 0, rootMargin: '0px 0px -38% 0px' });
+  }, { threshold: 0, rootMargin: '0px 0px -28% 0px' });
 
   all.forEach(function (el) {
     ioArm.observe(el);
@@ -84,7 +84,7 @@
     el.addEventListener('animationend', function () { el.classList.add('rv-done'); }, { once: true });
   });
 
-  // 기준선이 화면 62% 라 문서 끝 요소는 그 선까지 올라오지 못한다.
+  // 기준선이 화면 72% 라 문서 끝 요소는 그 선까지 올라오지 못한다.
   window.addEventListener('scroll', function () {
     if (window.innerHeight + window.scrollY < document.documentElement.scrollHeight - 4) return;
     all.forEach(on);
