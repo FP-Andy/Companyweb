@@ -436,9 +436,10 @@ html.js [data-rv].rv-done { will-change: auto; }
    iTOP21 SPORTS 는 가로 4.8:1 워드마크다. 정사각 마크와 같은 148px 폭에
    넣으면 폭에 막혀 잉크 높이가 31px 로 주저앉는다(다른 로고는 74px).
    이 셀만 넓혀 워드마크가 읽히는 크기를 확보한다. 높이를 키워봐야
-   소용없다 — 제약은 폭이다.
+   소용없다 — 제약은 폭이다. 다만 320px 로 넓혔더니 이번엔 너무 커졌다.
+   244px 에서 잉크 높이 45px 로, 정사각 마크(74px)의 60% 선이 적당하다.
 ──────────────────────────────────────────────────────────── */
-[data-r="marquee"] > [data-r="logowide"] { width: 320px; }
+[data-r="marquee"] > [data-r="logowide"] { width: 244px; }
 [data-r="logowide"] { padding-left: 14px !important; padding-right: 14px !important; }
 
 /* ── 한 줄 유지 (data-r="oneline") ───────────────────────────────
