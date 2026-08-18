@@ -181,21 +181,26 @@ html { caret-color: #151812; accent-color: #f26a00; scrollbar-color: #cec7ba #f5
    눈금이 세로 헤어라인 위를 오른쪽 끝에 맞춰 늘어나며 현재 위치를 가리킨다.
    본문 여백(--gutter 40px)과 같은 선에 세워 페이지 판면에 편입시킨다.
 ─────────────────────────────────────────────────────────────── */
+/* 폭 계산: 인덱스는 레일 컬럼(0~200px) 안에 머물러야 한다. 본문은 레일 뒤
+   40px 여백 다음, 즉 x=240 에서 시작한다. 가장 긴 항목 "04 TECHNOLOGY" 가
+   250px 까지 뻗어 본문 첫 열과 10px 겹쳐 있었다(고정 배치라 밀려나지도 않는다).
+   왼쪽 기준선(40px)은 본문 여백과 맞춘 선이므로 그대로 두고, 눈금·자간·크기를
+   줄여 오른쪽 끝을 끌어당긴다. 지금은 205px 근처에서 끝나 35px 이 남는다. */
 [data-r="index"] {
   left: 40px !important;
   gap: 11px !important;
   width: 150px !important;
-  font-size: 11px !important;
-  letter-spacing: 0.14em !important;
-  padding-left: 40px;
+  font-size: 10px !important;
+  letter-spacing: 0.1em !important;
+  padding-left: 28px;
 }
 /* 눈금들을 잇는 세로 기준선 */
 [data-r="index"]::before {
-  content: ""; position: absolute; left: 40px; top: -2px; bottom: -2px;
+  content: ""; position: absolute; left: 28px; top: -2px; bottom: -2px;
   width: 1px; background: rgba(21,24,18,0.12);
 }
-[data-r="index"] > a { position: relative; grid-template-columns: 40px 1fr !important; }
-[data-h="navtick"] { width: 40px !important; transform-origin: right center; will-change: transform; }
+[data-r="index"] > a { position: relative; grid-template-columns: 26px 1fr !important; gap: 9px !important; }
+[data-h="navtick"] { width: 26px !important; transform-origin: right center; will-change: transform; }
 [data-h="navitem"]:hover [data-h="navtick"] { background: #151812 !important; }
 
 /* ── 모바일 보정 ────────────────────────────────────────────────────
@@ -423,10 +428,6 @@ h1, h2, h3, h4 { text-wrap: balance; }
     [data-r="page"] h2[style*="scroll(root)"], [data-r="page"] figure[style*="scroll(root)"] { clip-path: none !important; }
     #main [style*="animation-name: heroFocus"], #main [style*="animation-name: wipeUp"] { animation: none !important; }
   }
-}
-/* 다만 로고 흐름은 멈추면 앞의 몇 장만 보인다 — 모바일에서는 시간 기반 루프로 돌린다 */
-@media (max-width: 900px) {
-  [data-r="marquee"][style*="scroll(root)"] { animation: marqueeX 34s linear infinite !important; }
 }
 
 /* ── 좁은 데스크톱(901–1180px) ──────────────────────────────────
