@@ -463,3 +463,14 @@ html.js [data-rv].rv-done { will-change: auto; }
   [data-r="rows"] > * { grid-template-columns: 1fr; gap: 8px; padding: 26px 0; }
   [data-r="rows"] [data-h="num"] { font-size: 26px; }
 }
+
+/* ── 한 열로 접힐 때의 읽기 순서 ────────────────────────────────
+   제품 Solution 의 좌우 교차 배치는 인라인 order 로 만들어져 있다. 폭이 좁아져
+   한 열이 되면 order 가 그대로 살아 있어 짝수 항목은 "사진 → 제목 → 설명" 이
+   된다. 앞 항목의 사진이 다음 항목 제목 위에 붙어, 어느 사진이 어느 단계인지
+   읽히지 않는다. 한 열에서는 항상 글이 먼저다.
+──────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  [data-r="two"] > [style*="order: 1"], [data-r="two"] > [style*="order: 2"] { order: 0 !important; }
+  [data-r="two"] > img { order: 1 !important; }
+}
