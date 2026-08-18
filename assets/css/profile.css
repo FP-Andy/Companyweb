@@ -156,10 +156,10 @@ html { caret-color: #151812; accent-color: #f26a00; scrollbar-color: #cec7ba #f5
 /* ── 스크롤 활주로 ────────────────────────────────────────────────
    패널은 margin-bottom: -100svh 로 흐름 높이가 0이므로 스크롤 거리를 만들지 못한다.
    이 요소가 전체 스크롤 거리를 전담한다.
-   패널 8개 = 전환 구간 7개, 슬롯당 250svh -> 2000svh (2026-08-18 200→250: 컴포넌트가 다 나온 뒤 여유가 30svh 뿐이라 플릭 한 번에 다음 패널로 건너뛰었다).
+   패널 8개 = 전환 구간 7개, 슬롯당 300svh -> 2400svh (2026-08-18 200→250→300: 컴포넌트가 다 나온 뒤 여유가 30svh 뿐이라 플릭 한 번에 다음 패널로 건너뛰었다. 250 에서도 빠르다는 피드백으로 300).
    짧게 잡으면 한 번 굴릴 때 패널이 통째로 지나가 내용을 읽을 수 없다.
 ─────────────────────────────────────────────────────────────── */
-[data-r="runway"] { display: block; position: relative; height: 2000svh; pointer-events: none; }
+[data-r="runway"] { display: block; position: relative; height: 2400svh; pointer-events: none; }
 @media (max-width: 900px) {
   /* 적층은 스크롤 구동 애니메이션이 있어야 성립한다. 지원하지 않는 브라우저
      에서만 활주로를 걷고 평범한 문서로 되돌린다(아래 @supports not 참조). */

@@ -56,7 +56,7 @@ GitHub Pages·로컬 서버·file:// 어디서나 동일하게 열립니다. 루
                              height: 100svh; margin-bottom: -100svh; overflow: clip;
   <div data-r="rail">     ← 좌측 컬럼(챕터 라벨)
   <div data-r="pad">      ← 세로 중앙 정렬
-<div data-r="runway">     ← 스크롤 활주로. height: 2000svh
+<div data-r="runway">     ← 스크롤 활주로. height: 2400svh
 ```
 
 **핵심은 `margin-bottom: -100svh`입니다.** 패널의 흐름 높이가 0이 되어 8개가
@@ -64,7 +64,7 @@ GitHub Pages·로컬 서버·file:// 어디서나 동일하게 열립니다. 루
 올라온 뒤에야 고정되고, 그 이동 구간이 그대로 보입니다.
 
 스크롤 거리는 `[data-r="runway"]`가 전담합니다. 패널 8개 = 슬롯 8개,
-슬롯당 250svh. 이 값 하나가 전체 페이싱을 결정합니다.
+슬롯당 300svh. 이 값 하나가 전체 페이싱을 결정합니다.
 
 - 패널 i 슬롯 = `i*12.5% ~ (i+1)*12.5%` (문서 전체 스크롤 기준)
 - 앞 18%에서 `enterSlide`로 떠오르고, 나머지에서 내부 컴포넌트가 도착
