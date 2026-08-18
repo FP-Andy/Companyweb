@@ -477,3 +477,7 @@ html.js [data-rv].rv-done { will-change: auto; }
   [data-r="two"] > [style*="order: 1"], [data-r="two"] > [style*="order: 2"] { order: 0 !important; }
   [data-r="two"] > img { order: 1 !important; }
 }
+/* 문의 폼은 560px 아래에서 두 열이면 입력칸이 136px 이라 값이 잘려 보인다 */
+@media (max-width: 560px) {
+  [data-r="form"], form[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+}
