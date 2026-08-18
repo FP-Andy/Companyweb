@@ -447,3 +447,19 @@ html.js [data-rv].rv-done { will-change: auto; }
    좁은 화면까지 nowrap 을 걸면 가로로 넘치므로 폭이 확보될 때만 건다.
 ──────────────────────────────────────────────────────────── */
 @media (min-width: 1180px) { [data-r="oneline"] { white-space: nowrap; } }
+
+/* ── 번호 목록 (data-r="rows") ───────────────────────────────────
+   같은 크기 카드 3개를 나란히 놓고 그 안에 12px 짜리 01/02/03 을 얹는 구성은
+   어느 사이트에나 있는 기본 템플릿처럼 읽힌다(디자인 방향 절: "카드는 뼈대가
+   아닙니다"). 카드를 걷어내고 한 줄씩 쌓는다. 번호는 읽는 것이 아니라 세는
+   것이므로 큰 고스트 숫자로 밀어 두고, 제목이 그 자리를 가져간다.
+──────────────────────────────────────────────────────────── */
+[data-r="rows"] > * { display: grid; grid-template-columns: minmax(58px, 7%) minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(18px, 2.6vw, 44px); align-items: baseline; padding: clamp(24px, 2.6vw, 38px) 0; border-top: 1px solid #ded7cc; }
+[data-r="rows"] > *:first-child { border-top: 0; padding-top: 0; }
+[data-r="rows"] [data-h="num"] { font-family: 'Archivo', sans-serif; font-size: clamp(30px, 3.4vw, 52px); font-weight: 800; letter-spacing: -0.04em; line-height: 0.9; color: #151812; opacity: 0.2; }
+[data-r="rows"] h3 { font-size: clamp(22px, 2.5vw, 36px); line-height: 1.26; letter-spacing: -0.03em; font-weight: 700; }
+[data-r="rows"] p { font-size: clamp(15.5px, 1.25vw, 19px); line-height: 1.78; color: #4a4d45; }
+@media (max-width: 900px) {
+  [data-r="rows"] > * { grid-template-columns: 1fr; gap: 8px; padding: 26px 0; }
+  [data-r="rows"] [data-h="num"] { font-size: 26px; }
+}
