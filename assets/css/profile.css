@@ -245,3 +245,87 @@ h1, h2, h3, h4 { text-wrap: balance; }
 ─────────────────────────────────────────────────────────────── */
 [data-r="measure-dark"] { position: relative; height: 2px; margin-top: 18px; background: rgba(245,240,232,0.22); }
 [data-r="measure-dark"] > i { display: block; height: 100%; width: var(--v, 0%); background: #f26a00; }
+
+/* ── 좌측 세로선 중복 해소 ───────────────────────────────────────
+   인덱스(고정)가 레일 컬럼(0~200px) 안에 통째로 겹쳐 있었다. 그래서
+   세로선이 둘이었다 - 인덱스 자기 선(x=80)과 레일 테두리(x=200).
+   그 사이에 라벨이 끼어 답답했다.
+   인덱스가 보이는 폭에서는 레일 테두리를 없애고, 인덱스의 선 하나만
+   구조선으로 남긴다. 인덱스가 숨는 900px 이하에서는 레일 테두리를 살린다.
+──────────────────────────────────────────────────────────── */
+@media (min-width: 901px) {
+  [data-r="rail"] { border-right: 0 !important; }
+}
+
+/* ── 첫 진입 드래그 안내 (data-r="draghint") ──────────────────────
+   이 면은 일반 페이지가 아니라 스크롤로 넘기는 슬라이드다. 상호작용
+   방식이 표준이 아니어서 처음 들어온 사람은 무엇을 해야 할지 모른다.
+   그래서 스크롤 유도 문구를 예외로 둔다(다른 면에는 두지 마십시오).
+
+   스크롤이 시작되면 곧바로 사라진다. scroll(root) 타임라인이라 JS 가
+   필요 없고, 한 번 지나가면 fill-mode 로 사라진 상태를 유지한다.
+
+   가운데 아래에 두었더니 커버의 하단 캡션과 겹쳤다. 비어 있는 우측
+   하단으로 옮기고 가로로 눕힌다.
+──────────────────────────────────────────────────────────── */
+[data-r="draghint"] {
+  position: fixed; right: 40px; bottom: 34px; z-index: 7;
+  display: flex; align-items: center; gap: 14px;
+  pointer-events: none;
+  animation-name: hintOut; animation-duration: auto; animation-timing-function: linear;
+  animation-fill-mode: both; animation-timeline: scroll(root); animation-range: 0% 2.2%;
+}
+@keyframes hintOut { from { opacity: 1; } to { opacity: 0; } }
+
+[data-r="draghint"] figure { margin: 0; position: relative; width: 34px; height: 56px; flex: none; }
+/* 손가락이 아래로 끌어내리는 반복 동작 */
+[data-r="draghint"] svg {
+  position: absolute; left: 0; top: 0; width: 34px; height: 34px;
+  animation: dragFinger 2.1s cubic-bezier(.4,0,.2,1) infinite;
+}
+@keyframes dragFinger {
+  0%, 8%   { transform: translateY(0);    opacity: 0; }
+  18%      { opacity: 1; }
+  62%      { transform: translateY(22px); opacity: 1; }
+  82%, 100%{ transform: translateY(22px); opacity: 0; }
+}
+/* 끌린 자국 */
+[data-r="draghint"] figure::after {
+  content: ""; position: absolute; left: 50%; top: 14px; width: 1px; height: 30px;
+  background: linear-gradient(180deg, rgba(21,24,18,0.32), rgba(21,24,18,0));
+  transform: translateX(-50%) scaleY(0); transform-origin: top center;
+  animation: dragTrail 2.1s cubic-bezier(.4,0,.2,1) infinite;
+}
+@keyframes dragTrail {
+  0%, 18%  { transform: translateX(-50%) scaleY(0); }
+  62%      { transform: translateX(-50%) scaleY(1); }
+  82%,100% { transform: translateX(-50%) scaleY(1); opacity: 0; }
+}
+[data-r="draghint"] span {
+  font-family: 'Archivo', sans-serif; font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: #65685f; white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-r="draghint"] svg, [data-r="draghint"] figure::after { animation: none; opacity: 1; }
+}
+@media (max-width: 560px) {
+  [data-r="draghint"] { right: 18px; bottom: 22px; gap: 10px; }
+  [data-r="draghint"] span { font-size: 9.5px; letter-spacing: 0.1em; }
+}
+
+/* ── 파트너 로고 흐름 (data-r="marquee") ─────────────────────────
+   이 규칙이 site.css 에만 있었다. profile 은 site.css 를 읽지 않으므로
+   로고 24장이 가로로 흐르지 않고 세로로 쌓여 1920px 가 되어 패널
+   밖으로 잘려 있었다. 앞의 몇 장만 보이던 원인이다.
+   패널 높이가 100svh 로 고정이므로 여기서는 로고를 더 작게 잡는다.
+──────────────────────────────────────────────────────────── */
+@keyframes marqueeX { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* max-content 인 마퀴가 부모를 밀어 넓히면 형제(지표·푸터)까지 화면 밖으로
+   나간다. 감싸개를 100% 로 가두고 min-width:0 으로 축소를 허용한다. */
+[data-r="marqueewrap"] { overflow: clip; width: 100%; min-width: 0; max-width: 100%; }
+[data-r="page"] > [data-r="pad"] { min-width: 0; }
+[data-r="marquee"] { display: flex; gap: 10px; width: max-content; animation: marqueeX 34s linear infinite; }
+[data-r="marquee"] > div { flex: none; width: 168px; }
+[data-r="marquee"] > [data-r="logowide"] { width: 200px; }
+[data-r="marqueewrap"]:hover [data-r="marquee"] { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { [data-r="marquee"] { animation: none; } }
