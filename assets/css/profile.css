@@ -83,12 +83,19 @@ a:hover { color: #f26a00; }
   [data-r="index"] { display: none; }
   [data-r="rail"] { display: none; }
   html { scroll-snap-type: none; }
-  [data-r="page"] { position: static !important; grid-template-columns: 1fr !important; height: auto !important; overflow: visible !important; animation-name: none !important; filter: none !important; opacity: 1 !important; }
+  [data-r="page"] { position: relative !important; grid-template-columns: 1fr !important; height: auto !important; overflow: clip !important; animation-name: none !important; filter: none !important; opacity: 1 !important; }
+  /* static 이면 inset:0 인 커버 사진·워터마크의 기준이 패널이 아니라 문서가
+     되어 자기 패널 밖에 놓인다. sticky 만 풀고 위치 기준은 남긴다.
+     장식 마크가 음수 좌표로 삐져나오므로 데스크톱과 같이 clip 으로 자른다
+     (hidden 은 스크롤 컨테이너를 만들어 타임라인을 죽인다 — 쓰지 말 것). */
   [data-r="pad"] { padding: 40px 20px !important; }
   [data-r="two"], [data-r="three"] { grid-template-columns: 1fr !important; gap: 30px !important; }
   [data-r="logos"] { grid-template-columns: repeat(2, 1fr) !important; }
   [data-r="pad"] { padding: 52px 20px !important; }
-  [data-r="hero"] { height: 220px !important; }
+  /* 커버 사진은 패널 전체 배경이다(position:absolute; inset:0). 여기에 높이
+     220px 를 걸면 화면 위쪽 띠로 쪼그라들어, 배경이 아니라 본문 위에 얹힌
+     작은 그림이 된다. 폭이 좁아질수록 더 어색해진다. 덮는 상태를 유지한다. */
+  [data-r="hero"] { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; }
   [data-r="tall"] { min-height: 260px !important; height: 260px !important; }
   [data-r="mid"] { height: 210px !important; }
   [data-r="navlinks"] { gap: 14px !important; font-size: 10px !important; }
